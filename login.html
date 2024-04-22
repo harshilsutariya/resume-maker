@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+  <div class="app">
+    <video autoplay loop muted class="background-video">
+      <source src="/1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="login-form">
+      <div class="title">Sign In</div>
+      <!-- Form starts here -->
+      <div class="form">
+        <form id="login-form">
+          <div class="input-container">
+            <input type="text" placeholder="username" name="username" required>
+            <div class="error" id="uname-error"></div>
+          </div>
+          <div class="input-container">
+            <input type="password" placeholder="password" name="password" required>
+            <div class="error" id="pass-error"></div>
+          </div>
+          <div class="button-container">
+            <input type="submit">
+          </div>
+        </form>
+      </div>
+      <!-- Form ends here -->
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var username = document.getElementsByName('username')[0].value;
+      var password = document.getElementsByName('password')[0].value;
+      var errors = {
+        uname: "invalid username",
+        pass: "invalid password"
+      };
+      var errorMessages = {};
+
+      var database = [{
+        username: "resume",
+        password: "resume123"
+      }];
+
+      var userData = database.find(function(user) {
+        return user.username === username;
+      });
+
+      if (userData) {
+        if (userData.password !== password) {
+          errorMessages.name = "pass";
+          errorMessages.message = errors.pass;
+        } else {
+          alert("User is successfully logged in");
+          // Perform redirection or other actions upon successful login
+        }
+      } else {
+        errorMessages.name = "uname";
+        errorMessages.message = errors.uname;
+      }
+
+      // Display error messages
+      if (errorMessages.name === "uname") {
+        document.getElementById('uname-error').innerText = errorMessages.message;
+      } else {
+        document.getElementById('uname-error').innerText = "";
+      }
+
+      if (errorMessages.name === "pass") {
+        document.getElementById('pass-error').innerText = errorMessages.message;
+      } else {
+        document.getElementById('pass-error').innerText = "";
+      }
+    });
+  </script>
+</body>
+
+</html>
